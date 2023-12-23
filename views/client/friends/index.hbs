@@ -1,0 +1,189 @@
+<div class="container mt-5">
+    <div class="row">
+
+            {{#if hasPosts}}
+            {{#each posts as |pos|}}
+                       <div class="col-md-7 mt-4 mx-5 "  >
+            <div class="card bg-dark text-light  mt-5 " >
+                <div class="posts bg-dark" >
+                    <img class="profile" src="{{user.profilePicture}}" />
+                    <p class=" mt-5 ">{{user.userName}}</p>
+                </div>
+                <img src="{{image}}" style="width: 87%; height:300px; object-fit:contain;" alt="imagen"
+                    class="ms-5 me-5">
+                <div class="card-body">
+                    <p>{{createdAt}}</p>
+                    <h5 class="card-text">{{content}} </h5>
+                </div>
+            
+           
+
+ <div class="accordion bg-dark " id="{{pos.id}}">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              comments
+
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#{{pos.id}}">
+            <div class="accordion-body">
+
+              {{#each ../comment as |com|}}
+              {{#if (IgualValor pos.id com.postId) }}
+
+              <div class="posts">
+                <ul class="list-group mb-3">
+
+                  <div class="posts ">
+
+
+                    <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
+                    <p class=" text-dark mt-5 "> {{../../user.userName}}</p>
+
+                  </div>
+                  <li class="list-group-item text-dark">{{com.comment}}</li>
+
+
+                  <div class="accordion bg-dark " id="accordionExample2">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading2">
+                        <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse"
+                          data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                          Replys
+                        </button>
+                      </h2>
+                      <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2"
+                        data-bs-parent="#accordionExample2">
+                        <div class="accordion-body">
+
+
+                          {{#each ../../reply as |rep|}}
+                          {{#if (IgualValor com.id rep.commentId) }}
+
+                          <div class="posts">
+                            <ul class="list-group mb-3">
+
+                              <div class="posts ">
+
+
+                                <img class="profile" src="{{../../../user.profilePicture}}" alt="Profile picture">
+                                <p class=" text-dark mt-5 "> {{../../../user.userName}}</p>
+
+
+
+                              </div>
+                              <li class="list-group-item text-dark">{{rep.reply}}</li>
+                            </ul>
+ </div>
+                          {{/if}}
+                          {{/each}}
+
+                          <form enctype="multipart/form-data" action="/reply" method="POST">
+                            <input type="hidden" value="{{../../user.id}}" name="reuserId">
+                            <div class="posts">
+
+                              <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
+                              <div class="textareaDiv">
+                                <input type="hidden" name="postId" value="{{pos.id}}" />
+                                <input type="hidden" name="commentId" value="{{com.id}}" />
+
+                                <label for="reply" class="form-label"></label>
+                                <textarea required name="Reply" id="reply" cols="30" rows="10"
+                                  placeholder="Reply"></textarea>
+
+
+                              </div>
+
+                              <button class="post" type="submit">Send</button>
+
+
+                            </div>
+                          </form>
+
+
+
+                </ul>
+              </div>
+              {{/if}}
+
+              {{/each}}
+
+
+              <form action="/comment" method="POST">
+                <div class="posts">
+                  <h2 class=" bg-danger ">{{../user.id}}</h2>
+                  <input type="hidden" value="{{../user.id}}" name="comUserId">
+
+                  <img class="profile" src="{{../user.profilePicture}}" alt="Profile picture">
+                  <input type="hidden" name="postId" value="{{pos.id}}" />
+                  <label for="comment" class="form-label"></label>
+                  <textarea required type="text" name="Comment" id="comment" cols="80" rows="2"
+                    placeholder="Put your comment here!"></textarea>
+
+                  <button class="post" type="submit">Send</button>
+
+
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+ 
+ 
+
+           {{/each}}
+            {{else}}
+            <span>Tus amigos no tienen Posts</span>
+            {{/if}}
+</div>
+        </div>
+        <div class="col-md-5" style="margin-top: 15%;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span class="card-title">Friends</span>
+                        <a href="/add-friends" class="btn btn-success rounded-3">+</a>
+                    </div>
+                    {{#if hasFriendsByMe}}
+                    {{#each friendByMe}}
+                    <div class="d-flex justify-content-around mt-3">
+                        <img src="{{FriendByOther.dataValues.profilePicture}}" class="w-25 rounded-circle">
+                        <span>{{FriendByOther.dataValues.name}} {{FriendByOther.dataValues.lastName}}</span>
+                        <form action="/delete-friend" method="post">
+                            <input type="hidden" name="id" id="id" value="{{id}}">
+                            <button type="submit" class="btn btn-danger rounded-circle text-center">X</button>
+                        </form>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                    {{#if hasFriendsByOther}}
+                    {{#each friendByOther}}
+                    <div class="d-flex justify-content-around mt-3">
+                        <img src="{{friendByMe.dataValues.profilePicture}}" class="w-25 rounded-circle">
+                        <span>{{friendByMe.dataValues.name}} {{friendByMe.dataValues.lastName}}</span>
+                        <form action="/delete-friend" method="post">
+                            <input type="hidden" name="id" id="id" value="{{id}}">
+                            <button type="submit" class="btn btn-danger rounded-circle text-center">X</button>
+                        </form>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

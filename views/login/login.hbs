@@ -1,0 +1,47 @@
+ <div class="loginRegister">
+        <main>
+            <form action="/login" method="post" class="formLogin">
+      
+                <h1>Hello again!</h1>
+                
+               {{#if HasErrorMessages}}
+                    <div class="container">
+                            <div class="row">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <ul>
+                                                {{#each errorsMessages}}
+                                                    <li>
+                                                        <span>
+                                                            {{this}}
+                                                        </span>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+
+                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                            </div>
+                    </div>
+            {{/if}}
+
+                <span class="subTitle">Welcome back you've been missed!</span>
+               
+                <div class="userDiv">
+                    <label for="Username">Username</label>  
+                    <input type="text" class="username" name="Username" id="username" placeholder="joe12" required>
+                </div>
+            <div class="passDiv">
+                <label for="Password">Password</label>
+                <input type="password" class="pass" name="Password" id="password" placeholder="Enter your password" required>
+            </div>
+                {{!-- <span class="forgotPass">Forgot password</span> --}}
+                 <span class="forgotPass"><a href="/reset" class="">Forgot password</a></span>
+                <button class="signIn">Sign in</button>
+                <span class="singUpSpan">Don't have an account? <a href="/signup" >Sign Up</a></span>
+
+            </form>
+            <div class="loginImg">
+                <img src="assets/imgs/social.jpeg" alt="A group of friends hanging out">
+            </div>
+        </main>
+    </div>

@@ -1,0 +1,42 @@
+ <div class="loginRegister">
+        <main>
+            <form action="/reset" method="post" class="formLogin formReset">
+                <h1>Forgot password?</h1>
+                
+               {{#if HasErrorMessages}}
+                    <div class="container">
+                            <div class="row">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <ul>
+                                                {{#each errorsMessages}}
+                                                    <li>
+                                                        <span>
+                                                            {{this}}
+                                                        </span>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+
+                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                            </div>
+                    </div>
+            {{/if}}
+
+                <span class="subTitle">No worries, We'll send you reset instructions.</span>
+                <div class="emailDiv">
+                        <label for="Email">Email</label>
+                        <input type="email" class="email" name="Email" id="" placeholder="Enter your email" required>
+                </div>
+                <button class="signIn">Reset password</button>
+                 <div class="back nav-item">
+                        <img class="icon" src="assets/imgs/arrow.png" alt="Events Icon">
+                        <span class="singUpSpan backSpan"><a href="/login" >Back to log in</a></span>
+                </div>
+
+            </form>
+            <div class="loginImg">
+                <img src="assets/imgs/social.jpeg" alt="A group of friends hanging out">
+            </div>
+        </main>
+    </div>
